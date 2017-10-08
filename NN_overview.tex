@@ -1,0 +1,108 @@
+\documentclass[]{article}
+
+%opening
+\title{Neural Networks in Machine Learning}
+\author{Matthijs Van keirsbilck}
+\usepackage{hyperref}
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+\href{https://en.wikipedia.org/wiki/Artificial_neural_network}{Neural networks} are inspired on the brain, and are a technique to automatically learn complex input-output mappings in order to classify certain data. They can achieve superhuman performance in certain tasks.
+\begin{enumerate}
+	\item Fully Connected Networks: Just a bunch of neurons, possibly in several layers. Neurons in a layer are connected to all the neurons in the next layer. These can complex imput-output mappings and are used for classification (eg you give an input, it tells you what the input is. For images, eg a dog or a car). Because there are so many connections, this does not scale at all. Therefore the input data is often preprocessed in certain ways to reduce dimensionality. This can be done in the network itself as well, for example by a CNN.
+	
+	\item Neural networks are trained with gradient descent through \href{https://en.wikipedia.org/wiki/Backpropagation}{backpropagation}, a technique used for optimizing the connections between the neurons (the 'weights') in such a way that the outputs of the network best correspond with the training data (so you try to reduce the error). Weights that contribute a lot to the error (meaning the weight value is bad) will be modified a lot, while weights that don't contribute to the error (meaning they're good weights), are not changed.
+	
+	\item Visual image processing deals with high-dimensional input data. To reduce the dimensionality, many people use \href{https://en.wikipedia.org/wiki/Convolutional_neural_network}{Convolutional Neural Networks (CNNs)}. Example networks: AlexNet, VGG (fairly simple), and more complex networks like ResNet, Inception etc.
+	
+	\item Time information (sequences). Eg for speech the temporal information (what follows what) is important to improve your predictions. To use this temporal information, \href{https://en.wikipedia.org/wiki/Recurrent_neural_network}{Recurrent Neural Networks (RNNs)} are used. A more complex variant are GRU and LSTM networks. See below for tutorials/explanation. This can also apply to visual processing in videos (one frame contains lots of info about what will be in the next frame); then CNNs and RNNs can be combined.
+\end{enumerate}
+\pagebreak
+
+
+\section{Recommended Reading}
+
+\begin{itemize}
+	\item \href{https://www.youtube.com/watch?v=BR9h47Jtqyw}{Quick intro}
+	\item \href{http://cs231n.stanford.edu/}{Stanford course on Convolutional Networks for visual processing}. Very recommended for general Neural Network techniques and background (how to setup a network, how training works, what parameters and options you have during training etc). Also \href{https://www.youtube.com/watch?v=LxfUGhug-iQ}{videos on YouTube} available
+	\item \href{http://colah.github.io/}{Very good blog page by a Machine Learning researcher, very informative and educational}
+	\item \href{https://www.tensorflow.org/get_started/mnist/beginners}{TensorFlow tutorial for MNIST} (handwritten number recognition). If something is not clear, you can find a lot more information in the next few links
+	\item \href{http://karpathy.github.io/2015/05/21/rnn-effectiveness/}{Recurrent neural networks example of what RNNs can do for text processing}
+	\item \href{https://github.com/sherjilozair/char-rnn-tensorflow}{TensorFlow implementation}
+	\item \href{https://jasdeep06.github.io/posts/Understanding-LSTM-in-Tensorflow-MNIST/}{TensorFlow tutorial for LSTMs on MNIST}
+	\item If you really want to understand how a neural network works and how to implement it, \href{http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/}{this tutorial} implements it from scratch. Very well written.
+\end{itemize}
+
+\section{Neural Network Frameworks}
+You don't need to manually code everything in Matlab, other people have taken care of much of the general setup and created some really good frameworks (see below).
+
+\textbf{OS:} Most things work on Windows, but sometimes it's a bit more complex to set up than on Linux. You might come across examples that don't support Windows, most researchers use Linux.
+
+\textbf{IDE:} For Python I think \href{https://docs.anaconda.com/anaconda/user-guide/tasks/integration/pycharm}{PyCharm} is super good. It has a built-in terminal which is really cool. 
+
+\textbf{Python: } Python is pretty much the default machine learning language. Use \href{https://www.anaconda.com/download/#linux}{Anaconda} to install packages in some sort of 'virtual machine' so that your system doesn't get messed up.
+I recommend to use \href{https://www.tensorflow.org/get_started/}{TensorFlow}. It's powerful without being overwhelming or hiding the underlying workings, it's backed by Google and nowadays has the largest community, so lots of examples and tutorials are available. 
+If you have a NVIDIA gpu with CUDA, make sure to install tensorflow-gpu, not just tensorflow! Using the GPU can make running your networks 10+ times faster.
+
+\begin{enumerate}
+	\item \href{http://www.deeplearning.net/software/theano/}{Theano}: one of the first frameworks. Very low-level, meaning it gives you a lot of power. Can be difficult to use at first. There are wrappers that make this easier. Lasagne is a good one, though very light so there are some things you'll need to implement yourself. Another one is Keras, which is very high-level so easy to get working but you don't get to really see what's going on under the hood. Keras can also use TensorFlow as backend, which is really cool. Theano will be \href{https://groups.google.com/forum/#!topic/theano-users/7Poq8BZutbY}{discontinued} soon.
+	\item \href{http://torch.ch/Torch}{Torch:} also a pretty early one. I don't have much experience with it.
+	\item \href{https://www.tensorflow.org/}{TensorFlow}: currently probably the most popular framework. Quite fast nowadays, easy to use but still allowing for lots of custom low-level modifications. Backed by Google, so future-proof. 
+	\item \href{http://caffe.berkeleyvision.org/}{Caffe}: also a big framework in researcher, especially in the hardware- neural network area.
+\end{enumerate}
+
+\subsection{Datasets}
+\begin{enumerate}
+	\item{Images}
+	\begin{itemize}
+		\item \href{http://yann.lecun.com/exdb/mnist/}{MNIST}: handwitten digit recognition. Small dataset, easy to train etc. Standard for simple examples and tutorials
+		\item \href{https://www.cs.toronto.edu/~kriz/cifar.html}{CIFAR10}: simple image classification. Fairly small dataset, easy to train etc. Also lots of tutorials available.
+		\item \href{http://www.image-net.org/}{ImageNet}: large dataset (100+ GB), standard benchmark for serious image classification in research. 
+	\end{itemize}
+	\item{Speech}
+	\begin{itemize}
+		\item \href{TIMIT}{https://catalog.ldc.upenn.edu/LDC93S1}: speech recognition dataset with sentence-level, word-level and phoneme-level labels. Non-free. \href{https://github.com/matthijsvk/TIMITspeech}{My repo with code for TIMIT}.
+		\item \href{https://sigmedia.tcd.ie/TCDTIMIT/}{TCD-TIMIT}: audio-visual speech dataset (400+ GB) with labeling similar to TIMIT. Requires lots of preprocessing (only raw video files and label files are provided. You could use \href{https://github.com/matthijsvk/TCDTIMITprocessing}{this repository} for that.
+		\item \href{http://www.voxforge.org/}{Voxforge}
+		\item \href{http://www.robots.ox.ac.uk/~vgg/data/lip_reading_sentences/}{Lip Reading Sentences (LRS)}
+		\item \href{http://spandh.dcs.shef.ac.uk/gridcorpus/}{GRID lipreading dataset}
+	\end{itemize}
+\end{enumerate}
+
+\pagebreak
+\section{Interesting Papers}
+
+\subsection{Visual}
+\begin{itemize}
+	\item \href{http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks}{Krizhevsky et al. 2012, AlexNet}
+	\item \href{https://www.cv-foundation.org/openaccess/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html}{He et al, 2014 Residual Neural Networks}
+\end{itemize}
+	
+\subsection{Speech}
+\begin{itemize}
+	\item \href{https://deepmind.com/blog/wavenet-generative-model-raw-audio/}{Deepmind: WaveNet}
+	\item \href{https://arxiv.org/abs/1512.02595}{Baidu, Deep Speech}
+	\item \href{https://github.com/rizkiarm/LipNet}{Oxford, Deepmind: lipreading with LipNet}
+		\item \href{https://www.robots.ox.ac.uk/~vgg/publications/2017/Chung17/}{Uni Oxford/ Deepmind: audio-visual speech recognition (LipNet follow-up)}
+\end{itemize}
+
+\subsection{Reinforcement Learning}
+\begin{itemize}
+	\item \href{https://storage.googleapis.com/deepmind-media/alphago/AlphaGoNaturePaper.pdf}{Deepmind, AlphaGo}
+	\item \href{https://karpathy.github.io/2016/05/31/rl/} {A. Karpathy, learning Pong from Pixels }
+\end{itemize}
+
+\section{Other stuff}
+\begin{itemize}
+	\item \href{http://cs224d.stanford.edu/}{Stanford Course for language processing (background info). The Visual course is better I think}
+	\item \href{https://github.com/terryum/awesome-deep-learning-papers}{Page with lots of interesting papers}
+	\item Wikipedia is always good (donate :) )
+	\item \href{https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/}{Another good overview of CNNs, with links to important papers in the field}
+	\item \href{http://deeplearning.net/datasets/}{Overview of (publicly) available datasets}
+	\item For training with GPUs, the GTX 1060 (6GB) or 1070 are good in terms of price-performance
+\end{itemize}
+
+
+\end{document}
